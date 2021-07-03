@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-12 col-md-5 offset-md-1">
+      <div class="col-md-6 col-lg-5 offset-lg-1 mb-4 mb-lg-0">
         <img
         :src="product.imageUrl"
         :alt="product.title"
         class="img-fluid"
         >
       </div>
-      <div class="col-12 col-md-4 offset-md-1">
+      <div class="col-md-6 col-lg-5 col-xxl-4 offset-lg-1">
         <h2 class="h2 mb-3">{{ product.title }}</h2>
         <p class="mb-5">{{ product.content }}</p>
         <p>{{ product.description }}</p>

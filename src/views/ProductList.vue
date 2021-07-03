@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <ul class="row align-items-md-stretch">
-      <li v-for="item in products" :key="item.id" class="col-4 mb-5 list-unstyled">
+      <li v-for="item in products" :key="item.id" class="col-md-6 col-lg-4 mb-5 list-unstyled">
         <div class="card h-100">
           <a @click.prevent="goProductPage(item.id)"
           href="#">
