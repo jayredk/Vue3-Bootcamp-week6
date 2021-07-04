@@ -9,6 +9,7 @@ import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueLoading from 'vue-loading-overlay';
 
 import App from './App.vue';
 import router from './router';
@@ -30,6 +31,7 @@ setLocale('zh_TW');
 
 app.use(VueAxios, axios);
 
+app.component('Loading', VueLoading);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('Error-Message', ErrorMessage);

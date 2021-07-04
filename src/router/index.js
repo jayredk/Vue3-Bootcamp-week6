@@ -21,13 +21,20 @@ const routes = [
       },
       {
         path: '/cart',
+        name: 'cart',
         component: () => import(/* webpackChunkName: "cart" */ '../views/Cart.vue'),
       },
     ],
   },
   {
     path: '/login',
+    name: 'login',
     component: () => import('../views/Login.vue'),
+  },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/backstage/Dashboard.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

@@ -54,7 +54,7 @@
         </tr>
       </tfoot>
     </table>
-    <div class="my-5 row justify-content-center">
+    <div v-if="cart.total !== 0" class="my-5 row justify-content-center">
       <Form v-slot="{ errors }"
       @submit="createOrder"
       class="col-md-6">
@@ -113,6 +113,8 @@
       </Form>
       </div>
   </div>
+
+  <Loading :active="isLoading"/>
 </template>
 
 <script>
@@ -129,16 +131,18 @@ export default {
         },
         message: '',
       },
+      isLoading: false,
     };
   },
   methods: {
     getCart() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       this.$http.get(url)
         .then((res) => {
           if (res.data.success) {
             this.cart = res.data.data;
-            console.log(res.data.data);
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -146,6 +150,7 @@ export default {
         });
     },
     updateCart(cartId, id, qty) {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${cartId}`;
       const data = {
         data: {
@@ -158,6 +163,7 @@ export default {
           if (res.data.success) {
             this.getCart();
             alert(res.data.message);
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -165,12 +171,14 @@ export default {
         });
     },
     removeItem(id) {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${id}`;
       this.$http.delete(url)
         .then((res) => {
           if (res.data.success) {
             this.getCart();
             alert(res.data.message);
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -178,13 +186,14 @@ export default {
         });
     },
     removeAll() {
-      console.log('hi');
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`;
       this.$http.delete(url)
         .then((res) => {
           if (res.data.success) {
             this.getCart();
             alert(res.data.message);
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -192,6 +201,7 @@ export default {
         });
     },
     createOrder() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
       const data = {
         data: { ...this.form },
@@ -200,6 +210,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);
+            this.isLoading = false;
             this.$router.push('/product-list');
           }
         })

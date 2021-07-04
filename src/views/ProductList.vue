@@ -27,17 +27,20 @@
       </li>
     </ul>
     <Pagination :pages="pagination" @change-page="getProducts" class="justify-content-center"/>
+    <Loading :active="isLoading"/>
   </div>
 </template>
 
 <script>
 import Pagination from '../components/Pagination.vue';
+// import { h } from 'vue';
 
 export default {
   data() {
     return {
       products: [],
       pagination: {},
+      isLoading: false,
     };
   },
   components: {
@@ -45,12 +48,14 @@ export default {
   },
   methods: {
     getProducts(page = 1) {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products?page=${page}`;
       this.$http.get(url)
         .then((res) => {
           if (res.data.success) {
             this.products = res.data.products;
             this.pagination = res.data.pagination;
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -61,6 +66,7 @@ export default {
       this.$router.push(`/product-list/${id}`);
     },
     addCart(id, qty = 1) {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       const data = {
         data: {
@@ -72,6 +78,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);
+            this.isLoading = false;
           }
         })
         .catch((err) => {

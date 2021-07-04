@@ -22,6 +22,7 @@
       </div>
     </div>
   </div>
+  <Loading :active="isLoading"/>
 </template>
 
 <script>
@@ -30,16 +31,19 @@ export default {
     return {
       product: {},
       qty: 1,
+      isLoading: false,
     };
   },
   methods: {
     getProduct() {
+      this.isLoading = true;
       const { id } = this.$route.params;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${id}`;
       this.$http.get(url)
         .then((res) => {
           if (res.data.success) {
             this.product = res.data.product;
+            this.isLoading = false;
           }
         })
         .catch((err) => {
@@ -47,6 +51,7 @@ export default {
         });
     },
     addCart(id, qty = 1) {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
       const data = {
         data: {
@@ -58,6 +63,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             alert(res.data.message);
+            this.isLoading = false;
           }
         })
         .catch((err) => {

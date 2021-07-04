@@ -15,7 +15,7 @@
           class="nav-link">前台產品列表</router-link>
           <router-link to="/cart"
           class="nav-link">前台購物車</router-link>
-          <router-link to="/login"
+          <router-link to="/dashboard"
           class="nav-link">後台登入</router-link>
         </div>
       </div>
